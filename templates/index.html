@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Ir Search Engine</title>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.css" rel="stylesheet" />
+    </head>
+    <body>
+        <div class="w-1/2 mx-auto">
+            <div class="flex justify-center items-center">
+                <img src="static/coventry-university-logo.png" alt="Image" width="180" />
+            </div>
+            <h2 class="mt-4 mb-6 text-4xl font-bold tracking-tight text-gray-900 text-center">Search Engine Coventry Publications</h2>
+            <form action="" method="POST">
+                <label for="default-search"
+                    class="mb-2 text-sm font-medium text-gray-900 sr-only">Search</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                        <svg aria-hidden="true" class="w-5 h-5 text-gray-500" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </div>
+                    <input type="search" name="query" id="default-search" value="{{ query }}"
+                        class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="Search Publications" required>
+                    <button type="submit"
+                        class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2">Search</button>
+                </div>
+            </form>
+            {% if result is not string %}
+                <div class="mt-4 p-4 bg-whiteshadow text-center">
+                    <p class="text-green-500">{{ result.shape[0] }} Search results found</p>
+                </div>
+                {% for item in result.iterrows() %}
+                <div class="mt-4 {% if loop.last %} mb-4 {% endif %} px-4 py-2 bg-white border border-gray-200 rounded-lg shadow">
+                    <a href="{{ item[1]['Link'] }}" target="_blank">
+                        <h5 class="mb-2 text-xl font-mono font-bold tracking-tight text-gray-900 hover:cursor-pointer">{{ item[1]['Title'] }}</h5>
+                    </a>
+                    <p class="mb-2 font-normal text-gray-500">{{ item[1]['Author'] }}</p>
+                    <p class="mb-2 font-normal text-gray-500">{{ item[1]['Published'] }}</p>
+                </div>
+                {% endfor %}
+            {% elif (result == 'No result found')  %}
+            <div class="mt-4 p-4 bg-whiteshadow text-center">
+                <p class="text-red-500">Search results not found</p>
+            </div>
+            {% else %}
+            <div class="mt-4 p-4 bg-whiteshadow text-center">
+                <p>Search results will be displayed here</p>
+            </div>
+            {% endif %}
+        </div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
+    </body>
+</html>
